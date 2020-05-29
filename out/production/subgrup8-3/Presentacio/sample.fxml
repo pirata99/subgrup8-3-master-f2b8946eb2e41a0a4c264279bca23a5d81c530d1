@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -51,7 +52,7 @@
             <TextArea fx:id="TextInfo" layoutX="170.0" layoutY="166.0" prefHeight="375.0" prefWidth="697.0" visible="false" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="LlistaWindow" layoutX="-2.0" layoutY="142.0" prefHeight="661.0" prefWidth="1098.0" style="-fx-background-color: #dde026;">
+      <AnchorPane fx:id="LlistaWindow" layoutX="-2.0" layoutY="142.0" prefHeight="661.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
          <children>
             <Label layoutX="27.0" layoutY="550.0" text="Per crear una llista necessites un nom. Introdueix el nom de la llista que vols crear:">
                <font>
@@ -65,7 +66,7 @@
             </Label>
             <ComboBox fx:id="ComboBoxList" layoutX="438.0" layoutY="34.0" onMouseClicked="#selectList" prefWidth="150.0" promptText="Selecciona llista" />
             <Button fx:id="NoDiscret" layoutX="192.0" layoutY="92.0" mnemonicParsing="false" onAction="#ButtonNoDiscret" text="Sense discretitzar (predeterminat)" />
-            <Button fx:id="Discret" layoutX="724.0" layoutY="92.0" mnemonicParsing="false" onAction="#ButtonDiscret" text="Discretitzar" />
+            <Button fx:id="Discret" layoutX="965.0" layoutY="74.0" mnemonicParsing="false" onAction="#ButtonDiscret" prefHeight="36.0" prefWidth="89.0" text="Discretitzar" />
             <Label layoutX="34.0" layoutY="96.0" text="Contingut llista:" />
             <Label fx:id="LlistaExistent" layoutX="419.0" layoutY="588.0" prefHeight="17.0" prefWidth="362.0" text="La llista amb aquest nom ja existeix, si us plau, prova un altre nom." />
             <ImageView layoutX="975.0" layoutY="511.0">
@@ -84,8 +85,34 @@
             </Label>
             <TextField fx:id="NameList" layoutX="43.0" layoutY="584.0" promptText="Introdueix nom llista" />
             <Button layoutX="906.0" layoutY="512.0" mnemonicParsing="false" onAction="#saveButton" text="Guardar" />
-            <TextArea fx:id="llistaConsultora" layoutX="17.0" layoutY="122.0" onMouseClicked="#EnterNewList" prefHeight="384.0" prefWidth="963.0" />
-            <TextField fx:id="atributDiscretitzar" layoutX="549.0" layoutY="92.0" promptText="Atribut a discretitzar..." />
+            <TextArea fx:id="llistaConsultora" layoutX="17.0" layoutY="122.0" prefHeight="384.0" prefWidth="963.0" />
+            <ComboBox fx:id="atributDiscretitzar" layoutX="725.0" layoutY="80.0" onMouseClicked="#selectAtribs" prefHeight="25.0" prefWidth="234.0" promptText="Selecciona atributs a discretitzar" />
+            <Button fx:id="AtributsDiscrets" layoutX="486.0" layoutY="92.0" mnemonicParsing="false" onAction="#mostraAtribsDiscrets" text="Atributs discrets" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="DiscretitzaPanel" layoutY="148.0" prefHeight="652.0" prefWidth="1091.0" style="-fx-background-color: #dde026;">
+         <children>
+            <Label layoutX="48.0" layoutY="60.0" text="TIPUS:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="Save1" layoutX="1036.0" layoutY="578.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="52.0" text="Guardar" visible="false" />
+            <TextArea fx:id="llistaDiscretitzada" layoutX="17.0" layoutY="122.0" prefHeight="384.0" prefWidth="963.0" />
+            <Label fx:id="assignaTipus" layoutX="97.0" layoutY="62.0" onMouseClicked="#assignaType" prefHeight="17.0" prefWidth="68.0" />
+            <TextField fx:id="nomAtr" layoutX="118.0" layoutY="89.0" onKeyReleased="#assignanomatr" promptText="Selecciona nom Atribut" />
+            <TextField fx:id="Rang1" layoutX="377.0" layoutY="89.0" onKeyReleased="#assignarang1" promptText="Selecciona Rang1" />
+            <TextField fx:id="Rang2" layoutX="629.0" layoutY="89.0" onKeyReleased="#assignarang2" promptText="Selecciona Rang2" />
+            <Label layoutX="48.0" layoutY="14.0" prefHeight="35.0" prefWidth="246.0" text="PANELL DISCRETITZA:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="rangdefault" layoutX="840.0" layoutY="41.0" mnemonicParsing="false" onAction="#rangperdefecte" text="Rang per defecte" />
+            <Button layoutX="844.0" layoutY="89.0" mnemonicParsing="false" onAction="#Discretitza" text="DISCRETITZA" />
+            <Button layoutX="918.0" layoutY="531.0" mnemonicParsing="false" onAction="#EliminaDiscret" text="Elimina" />
+            <TextField fx:id="AtrDiscret" layoutX="754.0" layoutY="531.0" onAction="#Discretitza" prefHeight="25.0" prefWidth="150.0" promptText="Atribut Discret" />
+            <Button layoutX="930.0" layoutY="602.0" mnemonicParsing="false" onAction="#ButtonLlistes" text="Torna al menu principal" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ReglesWindow" layoutY="149.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">

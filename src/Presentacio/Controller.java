@@ -58,6 +58,10 @@ public class Controller implements Initializable {
     private static Boolean confi= false;
     private static Boolean percentatge = false;
 
+    private static Boolean nomatribut = false;
+    private static Boolean range1 = false;
+    private static Boolean range2 = false;
+
 
     @FXML
     private Button LlistesPanel;
@@ -97,6 +101,34 @@ public class Controller implements Initializable {
     private Label NoValid;
     ObservableList<ArrayList<String>> data; //files
     private int posFila;
+    @FXML
+    private ComboBox<String> atributDiscretitzar;
+    @FXML
+    private Button Discret;
+    @FXML
+    private Button AtributsDiscrets;
+
+    //PANEL DISCRETITZA
+    @FXML
+    private AnchorPane DiscretitzaPanel;
+    @FXML
+    private Label assignaTipus;
+    @FXML
+    private TextField nomAtr;
+    @FXML
+    private TextField Rang1;
+    @FXML
+    private TextField Rang2;
+    @FXML
+    private RadioButton rangdefault;
+    @FXML
+    private TextArea llistaDiscretitzada;
+    @FXML
+    private TextField AtrDiscret;
+
+
+
+
 
     //PANEL REGLES
     @FXML
@@ -114,19 +146,24 @@ public class Controller implements Initializable {
     @FXML
     private TextField Frequencia;
     @FXML
-    private TextField atributDiscretitzar;
-    @FXML
     private TextField confiansa;
     @FXML
     private TextField tantxcent;
     @FXML
     private ChoiceBox<String> llistaDelete;
+    @FXML
+    private TextArea reglesArea;
+    @FXML
+    private TextArea TableConsultes;
 
 
 
     //PANEL RESULTATS
     @FXML
     private ComboBox<String> ComboBoxResultats;
+    @FXML
+    private TextArea resultats;
+
 
 
 
@@ -147,6 +184,7 @@ public class Controller implements Initializable {
         EditarReglesPanel.setVisible(false);
         ConsultaReglesPanel.setVisible(false);
         EliminarReglesPanel.setVisible(false);
+        DiscretitzaPanel.setVisible(false);
         //HelpButton.setVisible(true);
         //HomeButton.setVisible(true);
         information = false;
@@ -213,6 +251,7 @@ public class Controller implements Initializable {
                 EditarReglesPanel.setVisible(false);
                 ConsultaReglesPanel.setVisible(false);
                 EliminarReglesPanel.setVisible(false);
+                DiscretitzaPanel.setVisible(false);
                 information = false;
 
                 LlistaWindow.setVisible(false);
@@ -235,6 +274,7 @@ public class Controller implements Initializable {
             EditarReglesPanel.setVisible(false);
             ConsultaReglesPanel.setVisible(false);
             EliminarReglesPanel.setVisible(false);
+            DiscretitzaPanel.setVisible(false);
             information = false;
 
             LlistaWindow.setVisible(false);
@@ -267,6 +307,7 @@ public class Controller implements Initializable {
                 EditarReglesPanel.setVisible(false);
                 ConsultaReglesPanel.setVisible(false);
                 EliminarReglesPanel.setVisible(false);
+                DiscretitzaPanel.setVisible(false);
                 cancel = false;
                 information = false;
             } else cancel = true;
@@ -282,6 +323,7 @@ public class Controller implements Initializable {
             EditarReglesPanel.setVisible(false);
             ConsultaReglesPanel.setVisible(false);
             EliminarReglesPanel.setVisible(false);
+            DiscretitzaPanel.setVisible(false);
             information = false;
         }
     }
@@ -303,6 +345,7 @@ public class Controller implements Initializable {
                 EditarReglesPanel.setVisible(false);
                 ConsultaReglesPanel.setVisible(false);
                 EliminarReglesPanel.setVisible(false);
+                DiscretitzaPanel.setVisible(false);
                 cancel = false;
                 information = false;
             } else cancel = true;
@@ -317,6 +360,7 @@ public class Controller implements Initializable {
             EditarReglesPanel.setVisible(false);
             ConsultaReglesPanel.setVisible(false);
             EliminarReglesPanel.setVisible(false);
+            DiscretitzaPanel.setVisible(false);
             information = false;
         }
     }
@@ -339,6 +383,7 @@ public class Controller implements Initializable {
                 EditarReglesPanel.setVisible(false);
                 ConsultaReglesPanel.setVisible(false);
                 EliminarReglesPanel.setVisible(false);
+                DiscretitzaPanel.setVisible(false);
                 cancel = false;
                 information = false;
             } else cancel = true;
@@ -352,6 +397,7 @@ public class Controller implements Initializable {
             EditarReglesPanel.setVisible(false);
             ConsultaReglesPanel.setVisible(false);
             EliminarReglesPanel.setVisible(false);
+            DiscretitzaPanel.setVisible(false);
             information = false;
         }
     }
@@ -384,14 +430,17 @@ public class Controller implements Initializable {
             alerta.setContentText("Ei! Selecciona la llista a consultar");
             alerta.showAndWait();
         } else {
-            llistaConsultora = new TextArea();
-            System.out.print("hey");
+            llistaConsultora.setText(s);
+            System.out.print("hey1\n");
+            System.out.print("HOLAAAAA");
             ctrlDom.carregaLlista(s);
             ArrayList<String> consulta = ctrlDom.mostraLlistaAtribs();
-            System.out.print("hey");
+            System.out.print("hey3333");
+            String ss = "";
             for (int i = 0; i < consulta.size(); i++) {
-                llistaConsultora.setText(consulta.get(i));
+                ss += consulta.get(i) + "\n";
             }
+            llistaConsultora.setText(ss);
         }
     }
 
@@ -401,15 +450,84 @@ public class Controller implements Initializable {
         public void ButtonNoDiscret() {
        */
         String s = ComboBoxList.getValue();
+        String p = atributDiscretitzar.getValue();
+        if (s == null || p == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error");
+            alerta.setContentText("Ei! Selecciona la llista i atribut per discretitzar");
+            alerta.showAndWait();
+        } else {
+            LlistaWindow.setVisible(false);
+            DiscretitzaPanel.setVisible(true);
+        }
+    }
+
+    public void selectAtribs (){ //de la llista agafada
+
+        String s = ComboBoxList.getValue();
         if (s == null) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
             alerta.setTitle("Error");
-            alerta.setContentText("Ei! Selecciona la llista a consultar");
+            alerta.setContentText("Ei! Selecciona la llista per selecciona atributs");
             alerta.showAndWait();
-        } else {
+        }
+        else {
+            atributDiscretitzar.setItems(FXCollections.observableArrayList("hola"));
+            //atributDiscretitzar.setItems(FXCollections.observableArrayList(ctrlDom.);
+        }
+    }
+
+    public void mostraAtribsDiscrets () {
+
+    }
+
+    public void assignaType() {
+        assignaTipus.setText("LO QUE ME DE LA GANA");
+    }
+
+    public void rangperdefecte() {
+        if (rangdefault.isPressed()) {
 
 
         }
+    }
+
+    public void Discretitza() {
+        if (nomatribut&& range1 && range2) {
+            //ctrl_dom.atributsDiscretitzats;
+            llistaDiscretitzada.setText("MENJEUME ELS COLLONS");
+            AtrDiscret.setText("ATRIBUT QUE SIGUI");
+            nomAtr.clear();
+            Rang1.clear();
+            Rang2.clear();
+            nomatribut = false;
+            range1 = false;
+            range2 = false;
+            tancaLlista = false;
+            tancaRegles = false;
+            tancaResultats = false;
+        }
+        else {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error");
+            alerta.setContentText("Ei! Selecciona els parametres necessaris per discretitzar!");
+            alerta.showAndWait();
+        }
+
+    }
+
+    public void assignanomatr() {
+        nomatribut = true;
+    }
+    public void assignarang1() {
+        range1 = true;
+    }
+    public void assignarang2(){
+        range2 = true;
+    }
+
+    public void EliminaDiscret(){
+        //delete
     }
 
     public void saveButton() throws IOException {
@@ -514,6 +632,8 @@ public class Controller implements Initializable {
         //si no hem seleccionat el textField i frequencia (else) {
         if (llistaSelect && freq && confi && percentatge) {
             //crear text i set;
+            reglesArea.setText("Em menjeu el nabo?");
+
 
             Frequencia.clear();
             confiansa.clear();
@@ -632,6 +752,8 @@ public class Controller implements Initializable {
             alerta.setContentText("Ei! Selecciona la llista a consultar");
             alerta.showAndWait();
         } else {
+            //consulta regles
+            TableConsultes.setText("GUILLE NO EM MENGIS MÉS EL NABO");
             //posar les dades
 
             /*if tot OK then {
@@ -658,15 +780,16 @@ public class Controller implements Initializable {
     }
 
     public void mostraResultats() {
-        /*si no s'ha seleccionat la llista:
-        Alert alerta = new Alert(Alert.AlertType.WARNING);
-        alerta.setTitle("Error");
-        alerta.setContentText("Ei! Selecciona la llista a mostrar resultats");
-        alerta.showAndWait();
-
-        */
-        //else
-
+        String s = ComboBoxResultats.getValue();
+        if (s == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error");
+            alerta.setContentText("Ei! Selecciona la llista a mostrar resultats");
+            alerta.showAndWait();
+        }
+        else {
+            resultats.setText("ANDREW BANANA");
+        }
         tancaResultats=false;
     }
 

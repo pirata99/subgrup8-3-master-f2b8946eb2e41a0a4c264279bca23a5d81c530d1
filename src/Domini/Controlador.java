@@ -13,7 +13,7 @@ import javafx.scene.control.TableView;
 
 public class Controlador {
     public static Persistencia.Controlador ctrl_Persistencia = new Persistencia.Controlador();
-    public static Llista list;
+    public Llista list;
     public Regles reg;
     public Resultats res;
 
@@ -21,17 +21,18 @@ public class Controlador {
         if (ctrl_Persistencia.existeixFitxer("@../../Dades/"+nom+".llista")) return -1; //retorn: -1 -> ja existeix la llista
         if (!ctrl_Persistencia.existeixFitxer("@../../files/"+fitxer+".csv")) return 1;
         list = ctrl_Persistencia.llegeixCSV(nom, fitxer);
+        System.out.print("num atribs: "+list.getAtribs().size()+"\n");
         //list = new Llista(nom,ctrl_Persistencia.funcioQueLlegeixFitxers(fitxer)); //es crea tambe amb els atributs llegits del fitxer, falta fer la funcio a persistencia
         return 0;
-    }
-
-    public void carregaLlista(String nom) throws IOException {
-        list = ctrl_Persistencia.llegeixLlista(nom);
     }
 
     public void guardaLlista() throws IOException {
         //agafa la instancia de llista i la guarda.
         ctrl_Persistencia.guardaLlista("@../../Dades/"+list.getNomLlista()+".llista",list);
+    }
+
+    public void carregaLlista(String nom) throws IOException {
+        list = ctrl_Persistencia.llegeixLlista(nom);
     }
 
     public static ArrayList<String> getLlistaNoms() throws IOException{
@@ -45,10 +46,52 @@ public class Controlador {
 
     public ArrayList<String> mostraLlistaAtribs(){
         //lectura classe llista de fitxer
-        System.out.print("h222");
         ArrayList<String> tauleta = new ArrayList<>();
         System.out.print("num atribs: "+list.getNomLlista()+"\n");
         String aux = list.getAtribs().get(0).getNom();
+        for (int i=1; i<list.getAtribs().size(); i++){
+            aux += "\t" + list.getAtribs().get(i).getNom();
+        }
+        tauleta.add(aux);
+        for (int j=0; j<list.getNumCasos(); j++) {
+            aux = list.getAtribs().get(0).getCasos().get(j);
+            for (int i = 1; i < list.getAtribs().size(); i++) {
+                aux += "\t" + list.getAtribs().get(i).getCasos().get(j);
+            }
+            tauleta.add(aux);
+        }
+        return tauleta;
+    }
+
+    public ArrayList<String> mostraLlistaDiscret(){
+        //lectura classe llista de fitxer
+        ArrayList<String> tauleta = new ArrayList<>();
+        String aux = list.getAtribs().get(0).getAtribsDisc().get(0).getNom();
+        for (int k=0; k<list.getAtribs().get(0).getAtribsDisc().size(); k++) {
+            aux += "\t" + list.getAtribs().get(0).getAtribsDisc().get(k).getNom();
+        }
+        for (int i=1; i<list.getAtribs().size(); i++){
+            for (int k=0; k<list.getAtribs().get(i).getAtribsDisc().size(); k++) {
+                aux += "\t" + list.getAtribs().get(i).getAtribsDisc().get(k).getNom();
+            }
+        }
+        tauleta.add(aux);
+        for (int j=0; j<list.getNumCasos(); j++) {
+            aux = list.getAtribs().get(0).getCasos().get(j);
+            for (int i = 1; i < list.getAtribs().size(); i++) {
+                for (int k=0; k<list.getAtribs().get(i).getAtribsDisc().size(); k++) {
+                    aux += "\t" + String.valueOf(list.getAtribs().get(i).getAtribsDisc().get(k).getCasos().get(j));
+                }
+            }
+            tauleta.add(aux);
+        }
+        return tauleta;
+    }
+
+    public ArrayList<String> mostraRegles(){
+        //lectura classe llista de fitxer
+        ArrayList<String> tauleta = new ArrayList<>();
+        String aux = reg.getAssignacions().get(0).getAntecedents().getRangs().get(0).getNom();
         for (int i=1; i<list.getAtribs().size(); i++){
             aux += "\t" + list.getAtribs().get(i).getNom();
         }
