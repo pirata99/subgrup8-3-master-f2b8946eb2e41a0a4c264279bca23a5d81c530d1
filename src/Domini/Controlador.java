@@ -44,8 +44,6 @@ public class Controlador {
         return ctrl_Persistencia.llistaFitxers("@../../files", "csv");
     }
 
-
-
     public ArrayList<String> mostraLlistaAtribs(){
         //lectura classe llista de fitxer
         ArrayList<String> tauleta = new ArrayList<>();
@@ -125,17 +123,31 @@ public class Controlador {
         return disc;
     }
 
+    public ArrayList<String> getAtribsDiscrets(String nom){
+        Atribut a = trobaAtrib(nom);
+        ArrayList<String> disc = new ArrayList<String>();
+        for (int i=1; i<a.getAtribsDisc().size(); i++){
+            disc.add(a.getAtribsDisc().get(i).getNom());
+        }
+        return disc;
+    }
+
+    public void eliminaAtribDisc(String nomA, String nomD){
+        Atribut a = trobaAtrib(nomA);
+        for (int i=0; i< a.getAtribsDisc().size(); i++){
+            if (a.getAtribsDisc().get(i).getNom().equals(nomD)) a.getAtribsDisc().remove(i);
+        }
+    }
+
     public ArrayList<String> mostraUnAtributDiscret(String nom){
         Atribut a = trobaAtrib(nom);
         ArrayList<String> ret = new ArrayList<String>();
 
-        System.out.print(a.getNom());
         String aux = "";
         int f = 0;
         if (!a.getShowDefault()) f++;
         for (int k=f; k<a.getAtribsDisc().size(); k++) {
             aux += a.getAtribsDisc().get(k).getNom() + "\t";
-            System.out.print(a.getAtribsDisc().get(k).getNom());
         }
 
         ret.add(aux);
@@ -154,7 +166,7 @@ public class Controlador {
 
     private Atribut trobaAtrib(String nom){
         for (int i=0; i< list.getAtribs().size(); i++){
-            if (list.getAtribs().get(i).getNom() == nom) return list.getAtribs().get(i);
+            if (list.getAtribs().get(i).getNom().equals(nom)) return list.getAtribs().get(i);
         }
         return null;
     }
@@ -176,6 +188,7 @@ public class Controlador {
 
     public void afegeixRang(String nomAtr, String nomR, String rang1, String rang2){
         Atribut a = trobaAtrib(nomAtr);
+        System.out.print(a.getTipus());
         if (a.getTipus().equals("Double")) a.discretitzaValNum(nomR, Double.valueOf(rang1), Double.valueOf(rang2));
         else if (a.getTipus().equals("Date")) a.discretitzaData(nomR, rang1, rang2);
     }
@@ -216,6 +229,11 @@ public class Controlador {
         return 0;
     }
 
+    public void guardaRegles_i_Resultats() throws IOException {
+        ctrl_Persistencia.outputRegles(reg);
+        ctrl_Persistencia.outputResultats(res);
+    }
+
     public ArrayList<String> obteRegles(){
         ArrayList<String> ret = new ArrayList<String>();
         ArrayList<Assignacio> ass = reg.getAssignacions();
@@ -224,6 +242,16 @@ public class Controlador {
             ret.add(aux);
         }
         return ret;
+    }
+
+    public static ArrayList<String> getReglesNoms() throws IOException{
+        //accedir a la capa de persistencia i llegir el nom de totes les llistes guardades.
+        return ctrl_Persistencia.llistaFitxers("@../../Dades","regles");
+    }
+
+    public static ArrayList<String> getResultatNoms() throws IOException{
+        //accedir a la capa de persistencia i llegir el nom de totes les llistes guardades.
+        return ctrl_Persistencia.llistaFitxers("@../../Dades","resultats");
     }
 
     private String escriuAssig(Assignacio a){
@@ -246,6 +274,22 @@ public class Controlador {
                 b.add(escriuAssig(res.getClients().get(i).getAssigs().get(j)));
             }
         }
+    }
+
+    public ArrayList<String> mostraResultats(){
+        //lectura classe llista de fitxer
+        ArrayList<String> tauleta = new ArrayList<>();
+        for (int j=0; j<res.getClients().size(); j++) {
+            for (int k=0; k<res.getClients().get(j).getAssigs().size(); k++) {
+                String aux = "";
+                for (int i = 0; i < res.getClients().get(j).getAssigs().get(k).getAntecedents().getRangs().size(); i++) {
+                    aux += res.getClients().get(j).getAssigs().get(k).getAntecedents().getRangs().get(i).getNom() + "\t";
+                }
+                aux += " -> " + res.getClients().get(j).getAssigs().get(k).getConsequent().getNom();
+                tauleta.add(aux);
+            }
+        }
+        return tauleta;
     }
 
 }

@@ -25,14 +25,11 @@ public class Controlador {
     //LLegir un CSV nou
 
     public static Llista llegeixCSV(String nom, String filename) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, CloneNotSupportedException {
+    //Pre: fileName ha de ser el nom d’un arxiu .csv existent
+    //Post: retorna una instancia de llista amb nom nom, amb una taula sense discretitzar, els atributs i tipus.
         String[] atributsAL = fr.inputAtributsCSV("@../../files/"+filename+".csv");
         ArrayList<String[]> taula = fr.inputTaulaCSV("@../../files/"+filename+".csv");
         int numCasos = taula.size();
-        for (int i = 0; i < taula.size(); ++i) {
-            String[] temp = taula.get(i);
-            for (int j = 0; j < temp.length; ++j) {
-            }
-        }
         Llista l = new Llista(nom);
         l.carregaLlista(taula,atributsAL,numCasos);
         return l;
@@ -40,6 +37,8 @@ public class Controlador {
 
     //Retorna true si existeix i false si no
     public static Boolean existeixFitxer(String a) {
+    //Pre: res
+    //Post: si el fitxer existeix retorna true, else retorna false
         File fichero = new File(a);
         if (fichero.exists()) {
             return true;
@@ -50,6 +49,8 @@ public class Controlador {
     //Retorna la Llista dels fitxers
 
     private static String miraTipus(String a) {
+    //Pre: a es una arxiu .csv, .resultats, .regles o .llista
+    //Post: retorna el tipus de l’arxiu csv, resultats, regles o llista
         if ((a.charAt(a.length()-1)) == 'a') return "llista";
         else if ((a.charAt(a.length()-2)) == 'e') return "regles";
         else if ((a.charAt(a.length()-1)) == 'v') return "csv";
@@ -58,6 +59,8 @@ public class Controlador {
     }
 
     public static ArrayList<String> llistaFitxers(String path, String tipus) {
+    //Pre: el path és un path que existeix. Tipus és csv, resultats, regles o llista.
+    //Post: retorna una ArrayList de tots els fitxers en el directori path amb extensió tipus.
         File fichero = new File(path);
         String[] pathnames = fichero.list();
         ArrayList<String> nomFitxers = new ArrayList<String>();
@@ -80,15 +83,19 @@ public class Controlador {
     //Escriu en els Fitxers per guardar les dades que tenim
 
     /*private static void borraFitxer(String a) {
+    //Pre: ha de existir un fitxer amb nom a.
+    //Post: si existeix el borra.
         File fichero = new File(a);
         if (fichero.exists()) {
             fichero.delete();
         }
     }*/
-
+    
+    //OUTPUTS
 
     public static void guardaLlista(String nom, Llista ll) throws IOException {
-        //ll = l; //AIXO SERA LA LLISTA ACTUAL
+    //Pre: l és una instància inicialitzada
+    //Post: Guarda el contingut de l en un fitxer .llista
         
         //String nom = ll.getNomLlista();
         fw.outputfile(ll.getNomLlista(), nom);
@@ -125,76 +132,40 @@ public class Controlador {
         }
     }
 
-    public Llista llegeixLlista(String filename) throws IOException {
-        String contingut = fr.inputArxiuGuardat("@../../Dades/"+filename+".llista");
 
-
-        String[] lines = contingut.split("\n");
-        int nl = 0; //nextLine
-        //nse si sha de inciar un buit o algo si
-
-        ll = new Llista(lines[nl++]);
-        //ll.setNomLlista(lines[nl++]);
-        ll.setNumCasos(Integer.valueOf(lines[nl++]));
-        ll.setDiscretitzat(Boolean.valueOf(lines[nl++]));
-        Integer Atsize = Integer.valueOf(lines[nl++]);
-        ArrayList<Atribut> atribs = new ArrayList<Atribut>();
-        for (int i = 0; i < Atsize; i++) {
-            Atribut A = new Domini.Atribut(lines[nl++],lines[nl++]);
-            A.setDiscret(Boolean.valueOf(lines[nl++]));
-            A.setShowDefault(Boolean.valueOf(lines[nl++]));
-            ArrayList<String> casosAt = new ArrayList<String>();
-            Integer casosAtsize = Integer.valueOf(lines[nl++]);
-            for (int j = 0; j < casosAtsize; j++) {
-                casosAt.add(lines[nl++]);
-            }
-            A.setCasos(casosAt);
-            ArrayList<Rang> atribsDisc = new ArrayList<Rang>();
-            int atribsDiscsize = Integer.valueOf(lines[nl++]);
-            for (int j = 0; j < atribsDiscsize; j++) {
-                Rang tempRang = new Domini.Rang(lines[nl++]);
-                ArrayList<Boolean> casos = new ArrayList<Boolean>();
-                int casossize = Integer.valueOf(lines[nl++]);
-                for (int k = 0; k < casossize; k++) casos.add(Boolean.valueOf(lines[nl++]));
-                tempRang.setCasos(casos);
-                atribsDisc.add(tempRang);
-            }
-            for (int j = 0; j < atribsDiscsize; j++) {
-
-            }
-            A.setAtribsDisc(atribsDisc);
-            atribs.add(A);
-        }
-        ll.setAtribs(atribs);
-        return ll;
-    }
-
-    private void outputRegles(Regles r) throws IOException {
+    public void outputRegles(Regles r) throws IOException {
+    //Pre: r es una instancia inicialitzada
+    //Post: Guarda el contingut de r en un fitxer .regles
         reg = r; //AIXO SERA LA LLISTA ACTUAL
-
         String nom = reg.getNomRegles();
-        fw.outputfile(nom, nom);
-        fw.outputfile(String.valueOf(reg.getFrequencia()), nom);
-        fw.outputfile(String.valueOf(reg.getConfiansa()), nom);
+        String contingut = fr.inputArxiuGuardat("@../../Dades/"+nom+".regles");
+        fw.outputfile(nom, contingut);
+        fw.outputfile(String.valueOf(reg.getFrequencia()), contingut);
+        fw.outputfile(String.valueOf(reg.getConfiansa()), contingut);
         
-        outputAssignacio(reg.getAssignacions(), nom);
+        outputAssignacio(reg.getAssignacions(), contingut);
 
     }
 
-    private void outputResultats(Resultats r) throws IOException {
+    public void outputResultats(Resultats r) throws IOException {
+    //Pre: r es una instancia inicialitzada
+    //Post: Guarda el contingut de r en un fitxer .resultats
         res = r;
 
         String nom = res.getNomRes();
-        fw.outputfile(nom, nom);
+        String contingut = fr.inputArxiuGuardat("@../../Dades/"+nom+".resultats");
+        fw.outputfile(nom, contingut);
         ArrayList<Clients> clients = res.getClients();
-        fw.outputfile(String.valueOf(clients.size()), nom);
+        fw.outputfile(String.valueOf(clients.size()), contingut);
         for (int i = 0; i < clients.size(); i++) {
-            outputAssignacio(clients.get(i).getAssigs(), nom);
+            outputAssignacio(clients.get(i).getAssigs(), contingut);
         }
 
     }
 
     private static void outputAssignacio(ArrayList<Assignacio> assignacions, String nom) throws IOException {
+    //Pre: nom és el nom d’un fitxer .regles o .resultats
+    //Post: Guarda el contingut de assignacions en el fitxer amb nom nom.
         fw.outputfile(String.valueOf(assignacions.size()), nom);
         for (int i = 0; i < assignacions.size(); i++) {
             Assignacio tempAs = assignacions.get(i);
@@ -223,10 +194,56 @@ public class Controlador {
         }
     }
 
-    //inputs nous S'hauria de ordenar inputs i outputs per separat mes tard
-    public Regles inputRegles(String filename) throws IOException {
-        String contingut = fr.inputArxiuGuardat("@../../Dades/"+filename+".regles");
+    //INPUTS
+    
+    public Llista llegeixLlista(String filename) throws IOException {
+    //Pre: existeix un fitxer .llista amb nom fileName
+    //Post: retorna una instància Llista amb el contingut del fitxer
+        String contingut = fr.inputArxiuGuardat("@../../Dades/"+filename+".llista");
 
+        String[] lines = contingut.split("\n");
+        int nl = 0; //nextLine
+        //nse si sha de inciar un buit o algo si
+        ll = new Llista(lines[nl++]);
+        //ll.setNomLlista(lines[nl++]);
+        ll.setNumCasos(Integer.valueOf(lines[nl++]));
+        ll.setDiscretitzat(Boolean.valueOf(lines[nl++]));
+        Integer Atsize = Integer.valueOf(lines[nl++]);
+        ArrayList<Atribut> atribs = new ArrayList<Atribut>();
+        for (int i = 0; i < Atsize; i++) {
+            Atribut A = new Domini.Atribut(lines[nl++],lines[nl++]);
+            A.setDiscret(Boolean.valueOf(lines[nl++]));
+            A.setShowDefault(Boolean.valueOf(lines[nl++]));
+            ArrayList<String> casosAt = new ArrayList<String>();
+            Integer casosAtsize = Integer.valueOf(lines[nl++]);
+            for (int j = 0; j < casosAtsize; j++) {
+                casosAt.add(lines[nl++]);
+            }
+            A.setCasos(casosAt);
+            ArrayList<Rang> atribsDisc = new ArrayList<Rang>();
+            int atribsDiscsize = Integer.valueOf(lines[nl++]);
+            for (int j = 0; j < atribsDiscsize; j++) {
+                Rang tempRang = new Domini.Rang(lines[nl++]);
+                ArrayList<Boolean> casos = new ArrayList<Boolean>();
+                int casossize = Integer.valueOf(lines[nl++]);
+                for (int k = 0; k < casossize; k++) casos.add(Boolean.valueOf(lines[nl++]));
+                tempRang.setCasos(casos);
+                atribsDisc.add(tempRang);
+            }
+            for (int j = 0; j < atribsDiscsize; j++) {
+            }
+            A.setAtribsDisc(atribsDisc);
+            atribs.add(A);
+        }
+        ll.setAtribs(atribs);
+        return ll;
+    }
+    
+    
+    public Regles inputRegles(String filename) throws IOException {
+    //Pre: existeix un fitxer .regles amb nom fileName
+    //Post: retorna una instancia Regles amb el contingut del fitxer
+        String contingut = fr.inputArxiuGuardat("@../../Dades/"+filename+".regles");
         String[] lines = contingut.split("\n");
         int nl = 0; //nextLine
         reg = new Regles(lines[nl++]);
@@ -238,8 +255,9 @@ public class Controlador {
     }
 
     public Resultats inputResultats(String filename) throws IOException {
+    //Pre: existeix un fitxer .resultats amb nom fileName
+    //Post: retorna una instancia Resultats amb el contingut del fitxer
         String contingut = fr.inputArxiuGuardat("@../../Dades/"+filename+".resultats");
-
         String[] lines = contingut.split("\n");
         int nl = 0; //nextLine
         res = new Resultats(lines[nl++]);
@@ -256,6 +274,8 @@ public class Controlador {
 
 
     private ArrayList<Assignacio> inputAssignacio(String[] lines, int nl) throws IOException {
+    //Pre: existeix un fitxer .regles o .resultats amb nom fileName
+    //Post: retorna una ArrayListAssignacio amb els continguts del fitxer        
         ArrayList<Assignacio> assignacions = new ArrayList<Assignacio>();
         Integer assignacionssize = Integer.valueOf(lines[nl++]);
         for (int i = 0; i < assignacionssize; i++) {

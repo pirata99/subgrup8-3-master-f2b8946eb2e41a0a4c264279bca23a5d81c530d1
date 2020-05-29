@@ -696,8 +696,12 @@ public class Controller implements Initializable {
 
            int a = ctrlDom.creaRegles_i_Resultats(s,s,p,f,c);
            if (a == 0) {
-
-               //reglesArea.setText();
+               ArrayList<String> consulta = ctrlDom.mostraRegles();
+               String ss = "";
+               for (int i = 0; i < consulta.size(); i++) {
+                   ss += consulta.get(i) + "\n";
+               }
+               llistaDiscretitzada.setText(ss);
            }
 
 
@@ -737,7 +741,11 @@ public class Controller implements Initializable {
 
     }
 
-    public void guardatCorrectamentRegles() {
+    public void seleccionaRegles() throws IOException {
+        llistaDeRegles.setItems(FXCollections.observableArrayList(ctrlDom.getReglesNoms()));
+    }
+
+    public void guardatCorrectamentRegles() throws IOException {
         //llegeix el valor del TextField i fa el càlcul de les noves regles d'associacio
 
         //si tot es correcte fes aixo
@@ -747,7 +755,7 @@ public class Controller implements Initializable {
         //alerta.showAndWait();
         Optional<ButtonType> result = alerta.showAndWait();
         if (result.get() == ButtonType.OK) {
-            //A MES GUARDEM.
+            ctrlDom.guardaRegles_i_Resultats();
             Alert alerta2 = new Alert(Alert.AlertType.INFORMATION);
             alerta2.setTitle("Canvis guardats");
             alerta2.setContentText("S'han guardat els canvis correctament.");
@@ -818,8 +826,12 @@ public class Controller implements Initializable {
             alerta.setContentText("Ei! Selecciona la llista a consultar");
             alerta.showAndWait();
         } else {
-            //consulta regles
-            TableConsultes.setText("GUILLE NO EM MENGIS MÉS EL NABO");
+            ArrayList<String> consulta = ctrlDom.mostraRegles();
+            String ss = "";
+            for (int i = 0; i < consulta.size(); i++) {
+                ss += consulta.get(i) + "\n";
+            }
+            TableConsultes.setText(ss);
             //posar les dades
 
             /*if tot OK then {
@@ -845,6 +857,10 @@ public class Controller implements Initializable {
 
     }
 
+    public void seleccionaResultats() throws IOException {
+        ComboBoxResultats.setItems(FXCollections.observableArrayList(ctrlDom.getResultatNoms()));
+    }
+
     public void mostraResultats() {
         String s = ComboBoxResultats.getValue();
         if (s == null) {
@@ -854,7 +870,12 @@ public class Controller implements Initializable {
             alerta.showAndWait();
         }
         else {
-            resultats.setText("ANDREW BANANA");
+            ArrayList<String> consulta = ctrlDom.mostraResultats();
+            String ss = "";
+            for (int i = 0; i < consulta.size(); i++) {
+                ss += consulta.get(i) + "\n";
+            }
+            resultats.setText(ss);
         }
         tancaResultats=false;
     }

@@ -14,6 +14,8 @@ public class Atribut{
 
 	//Creadores
 	public Atribut(String nomA){
+		//Pre: nomA és un String vàlid amb el nom de l'atribut que es vol crear.
+		//Post: Crea una instancia de la classe Atribut i la inicialitza amb el nom definit i valors nuls.
 		nom = nomA;
 		tipus = "";
 		atribsDisc = new ArrayList<Rang>();
@@ -22,6 +24,8 @@ public class Atribut{
 		casos = new ArrayList<String>();
 	}
 	public Atribut(String nomA, String tipusA){
+		//Pre: nomA és un String vàlid amb el nom de l'atribut que es vol crear, tipusA és un String càlid amb el tipus de l'atribut.
+		//Post: Crea una instancia de la classe Atribut i la inicialitza amb el nom i el tipus definits, i valors nuls.
 		nom = nomA;
 		tipus = tipusA;
 		atribsDisc = new ArrayList<Rang>();
@@ -30,6 +34,8 @@ public class Atribut{
 		casos = new ArrayList<String>();
 	}
 	public Atribut(String nomA, String tipusA,ArrayList<String> casosA, ArrayList<Rang> atribsDiscA){
+		//Pre: nomA és un String vàlid amb el nom de l'atribut que es vol crear, tipusA és un String vàlid amb el tipus de l'atribut.
+		//Post: Crea una instancia de la classe Atribut i la inicialitza amb el nom, el tipus, els casos i els atributs discrets definits, i valors nuls.
 		nom = nomA;
 		tipus = tipusA;
 		casos = casosA;
@@ -40,18 +46,28 @@ public class Atribut{
 
 	//Getters
 	public String getNom(){
+		//Pre: -
+		//Post: Retorna el nom de l'atribut.
 		return nom;
 	}
 	public String getTipus(){
+		//Pre: -
+		//Post: Retorna el tipus de l'atribut.
 		return tipus;
 	}
 	public Boolean getDiscret(){
+		//Pre: -
+		//Post: Retorna si l'atribut està discretitzat.
 		return discret;
 	}
 	public Boolean getShowDefault(){
+		//Pre: -
+		//Post: Retorna si es vol comptar amb l'atribut discretitzat per defecte.
 		return showDefault;
 	}
 	public ArrayList<String> getCasos(){
+		//Pre: -
+		//Post: Retorna la llista de casos de l'atribut.
 		return casos;
 	}
 	public ArrayList<Rang> getAtribsDisc(){
@@ -86,7 +102,7 @@ public class Atribut{
 		casos.add(cas);
 	}
 	public void discretitzaValNum(String rang, Double tall1, Double tall2){
-		rangDefecte();
+		if (atribsDisc.size() == 0) rangDefecte();
 		ArrayList<Boolean> r1 = ompleFals();
 		ArrayList<Boolean> r2 = atribsDisc.get(0).getCasos();
 		for (int i=0; i<casos.size(); i++){
@@ -109,7 +125,7 @@ public class Atribut{
 		ArrayList<Rang> lRang = new ArrayList<Rang>();
 		String nomCert = this.nom + "_cert";
 		String nomFals = this.nom + "_fals";
-		rangDefecte();
+		if (atribsDisc.size() == 0) rangDefecte();
 		//ArrayList<Boolean> r1 = ompleFals();
 		//ArrayList<Boolean> r2 = ompleFals();
 		ArrayList<Boolean> r1 = ompleFals();
@@ -140,7 +156,7 @@ public class Atribut{
 		discret = true;
 	}
 	public void discretitzaString(){
-		rangDefecte();
+		if (atribsDisc.size() == 0) rangDefecte();
 		for (int i=0; i<casos.size(); i++){
 			//int aux = findName(namesFound,casos[i]);
 			String nomAux = nom+"_"+casos.get(i);
@@ -159,7 +175,7 @@ public class Atribut{
 		discret = true;
 	}
 	public void discretitzaData(String nomRang, String data1, String data2){
-		rangDefecte();
+		if (atribsDisc.size() == 0) rangDefecte();
 		ArrayList<Boolean> r1 = ompleFals();
 		atribsDisc.add(new Rang(nomRang+"_"+"default", ompleFals()));
 		ArrayList<Boolean> r2 = atribsDisc.get(0).getCasos();
@@ -187,14 +203,14 @@ public class Atribut{
 	private void rangDefecte(){
 		ArrayList<Boolean> b = new ArrayList<Boolean>();
 		for (int i=0; i<casos.size(); i++){
-			if (casos.get(i) == "null" || casos.get(i)=="Null" || casos.get(i) == "NULL") b.add(false);
+			if (casos.get(i).equals("null") || casos.get(i).equals("Null") || casos.get(i).equals("NULL")) b.add(false);
 			else b.add(true);
 		}
 		atribsDisc.add(new Rang(nom+"_"+"default", b));
 	}
 	private int trobaRang(String n){
 		for (int i=0; i<atribsDisc.size(); i++){
-			if (atribsDisc.get(i).getNom() == n) return i;
+			if (atribsDisc.get(i).getNom().equals(n)) return i;
 		}
 		return -1;
 	}

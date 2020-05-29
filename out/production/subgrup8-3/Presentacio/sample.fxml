@@ -124,7 +124,7 @@
             <Button layoutX="412.0" layoutY="52.0" mnemonicParsing="false" onAction="#ButtonEditarRegles" text="Editar o visualitzar regles d'associacions" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="CrearReglesPanel" layoutX="-2.0" layoutY="149.0" prefHeight="659.0" prefWidth="1091.0" style="-fx-background-color: dde026;">
+      <AnchorPane fx:id="CrearReglesPanel" layoutX="-2.0" layoutY="149.0" prefHeight="659.0" prefWidth="1091.0" style="-fx-background-color: dde026;" visible="false">
          <children>
             <Label layoutX="34.0" layoutY="60.0" prefHeight="17.0" prefWidth="341.0" text="Introdueix la frequencia de llindar per les regles:">
                <font>
@@ -185,7 +185,7 @@
       </AnchorPane>
       <AnchorPane fx:id="ConsultaReglesPanel" layoutX="-5.0" layoutY="148.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: dde026;" visible="false">
          <children>
-            <ComboBox fx:id="llistaDeRegles" layoutX="513.0" layoutY="64.0" onMouseClicked="#selectList" prefHeight="25.0" prefWidth="141.0" promptText="Selecciona llista" />
+            <ComboBox fx:id="llistaDeRegles" layoutX="513.0" layoutY="64.0" onMouseClicked="#seleccionaRegles" prefHeight="25.0" prefWidth="141.0" promptText="Selecciona " />
             <Label layoutX="92.0" layoutY="68.0" />
             <Label layoutX="50.0" layoutY="68.0" prefHeight="17.0" prefWidth="475.0" text="Selecciona la llista a la que vols consultar les seves regles d'associacions:">
                <font>
@@ -215,7 +215,7 @@
             <ChoiceBox fx:id="llistaDelete" layoutX="342.0" layoutY="69.0" onMouseClicked="#selectList" prefHeight="25.0" prefWidth="124.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ResultatsWindow" layoutX="-6.0" layoutY="147.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
+      <AnchorPane fx:id="ResultatsWindow" layoutX="-6.0" layoutY="147.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;">
          <children>
             <Button layoutX="521.0" layoutY="40.0" mnemonicParsing="false" onAction="#mostraResultats" text="Mostra resultats" />
             <Label layoutX="45.0" layoutY="43.0" text="RESULTATS OBTINGUTS:">
@@ -223,7 +223,7 @@
                   <Font name="Georgia" size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="ComboBoxResultats" layoutX="320.0" layoutY="40.0" onAction="#selectList" prefWidth="150.0" promptText="Selecciona resultats" />
+            <ComboBox fx:id="ComboBoxResultats" layoutX="320.0" layoutY="40.0" onAction="#seleccionaResultats" prefWidth="150.0" promptText="Selecciona resultats" />
             <Button layoutX="924.0" layoutY="603.0" mnemonicParsing="false" onAction="#goHome" text="Torna al menu principal" />
             <TextArea fx:id="resultats" layoutX="36.0" layoutY="87.0" prefHeight="510.0" prefWidth="990.0" />
          </children>
