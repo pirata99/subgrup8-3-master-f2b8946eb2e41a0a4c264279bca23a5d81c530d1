@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="797.0" prefWidth="1089.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentacio.Controller">
+   <children>
+      <AnchorPane fx:id="PanelInicial" prefHeight="149.0" prefWidth="1089.0" style="-fx-background-color: #48a395;">
+         <children>
+            <ImageView fx:id="Help" fitHeight="26.0" fitWidth="26.0" layoutX="1048.0" layoutY="39.0">
+               <image>
+                  <Image url="@Images/icons8_help_48px.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="29.0" layoutY="33.0" prefHeight="35.0" prefWidth="210.0" text="APRIORI">
+               <font>
+                  <Font name="Britannic Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="75.0" prefHeight="25.0" prefWidth="201.0" text="CÀLCUL DE REGLES D'ASSOCIACIONS" />
+            <ImageView fx:id="Menu" layoutX="275.0" layoutY="40.0">
+               <image>
+                  <Image url="@Images/icons8_home_26px.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="HomeButton" layoutX="213.0" layoutY="35.0" mnemonicParsing="false" onAction="#goHome" prefHeight="35.0" prefWidth="52.0" text="Home" />
+            <Button fx:id="HelpButton" layoutX="993.0" layoutY="38.0" mnemonicParsing="false" onAction="#setInfo" prefHeight="26.0" prefWidth="52.0" text="Help" />
+            <Button fx:id="ReglesPanel" layoutX="388.0" layoutY="103.0" mnemonicParsing="false" onAction="#ButtonRegles" prefHeight="46.0" prefWidth="373.0" text="REGLES" />
+            <Button fx:id="ResultatsPanel" layoutX="761.0" layoutY="103.0" mnemonicParsing="false" onAction="#ButtonResultats" prefHeight="46.0" prefWidth="330.0" text="RESULTATS " />
+            <Button fx:id="LlistesPanel" layoutX="-9.0" layoutY="103.0" mnemonicParsing="false" onAction="#ButtonLlistes" prefHeight="46.0" prefWidth="400.0" text="LLISTES" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="PanelElements" layoutY="149.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: dde026;" visible="false">
+         <children>
+            <Label layoutX="45.0" layoutY="62.0" prefHeight="35.0" prefWidth="611.0" text="SELECCIONA L'ELEMENT AMB EL QUE VOLS TREBALLAR (LLISTES, REGLES O RESULTATS):">
+               <font>
+                  <Font name="Georgia" size="13.0" />
+               </font>
+            </Label>
+            <Button layoutX="966.0" layoutY="589.0" mnemonicParsing="false" onAction="#quit" prefHeight="50.0" prefWidth="109.0" text="Quit" />
+            <TextArea fx:id="TextInfo" layoutX="170.0" layoutY="166.0" prefHeight="375.0" prefWidth="697.0" visible="false" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="LlistaWindow" layoutX="-2.0" layoutY="142.0" prefHeight="661.0" prefWidth="1098.0" style="-fx-background-color: #dde026;">
+         <children>
+            <Label layoutX="27.0" layoutY="550.0" text="Per crear una llista necessites un nom. Introdueix el nom de la llista que vols crear:">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="39.0" text="Aquestes són les llistes que tens, selecciona quina llista vols consultar: ">
+               <font>
+                  <Font name="Georgia" size="13.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="ComboBoxList" layoutX="438.0" layoutY="34.0" onMouseClicked="#selectList" prefWidth="150.0" promptText="Selecciona llista" />
+            <Button fx:id="NoDiscret" layoutX="192.0" layoutY="92.0" mnemonicParsing="false" onAction="#ButtonNoDiscret" text="Sense discretitzar (predeterminat)" />
+            <Button fx:id="Discret" layoutX="724.0" layoutY="92.0" mnemonicParsing="false" onAction="#ButtonDiscret" text="Discretitzar" />
+            <Label layoutX="34.0" layoutY="96.0" text="Contingut llista:" />
+            <Label fx:id="LlistaExistent" layoutX="419.0" layoutY="588.0" prefHeight="17.0" prefWidth="362.0" text="La llista amb aquest nom ja existeix, si us plau, prova un altre nom." />
+            <ImageView layoutX="975.0" layoutY="511.0">
+               <image>
+                  <Image url="@Images/icons8_save_26px.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="Save" layoutX="1036.0" layoutY="578.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="52.0" text="Guardar" visible="false" />
+            <Button fx:id="EnterNameList" layoutX="227.0" layoutY="602.0" mnemonicParsing="false" onAction="#EnterNewList" prefHeight="25.0" prefWidth="150.0" text="Crea" />
+            <ComboBox fx:id="ComboBoxFitxers" layoutX="43.0" layoutY="619.0" onMouseClicked="#selectFitxer" prefHeight="25.0" prefWidth="150.0" promptText="Introdueix el fitxer" />
+            <Label fx:id="NoValid" layoutX="419.0" layoutY="631.0" text="Opció no vàlida, si us plau, intentar-ho. " />
+            <Label layoutX="500.0" layoutY="549.0" text="Nota: El fitxer a introduir ha d'estar al mateix directori que el programa">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <TextField fx:id="NameList" layoutX="43.0" layoutY="584.0" promptText="Introdueix nom llista" />
+            <Button layoutX="906.0" layoutY="512.0" mnemonicParsing="false" onAction="#saveButton" text="Guardar" />
+            <TextArea fx:id="llistaConsultora" layoutX="17.0" layoutY="122.0" onMouseClicked="#EnterNewList" prefHeight="384.0" prefWidth="963.0" />
+            <TextField fx:id="atributDiscretitzar" layoutX="549.0" layoutY="92.0" promptText="Atribut a discretitzar..." />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ReglesWindow" layoutY="149.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
+         <children>
+            <Label layoutX="44.0" layoutY="91.0" text="Selecciona operació a realitzar:">
+               <font>
+                  <Font name="Georgia" size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="412.0" layoutY="133.0" mnemonicParsing="false" onAction="#ButtonCrearRegles" text="Crear conjunt de regles d'associació" />
+            <Button layoutX="412.0" layoutY="52.0" mnemonicParsing="false" onAction="#ButtonEditarRegles" text="Editar o visualitzar regles d'associacions" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="CrearReglesPanel" layoutX="-2.0" layoutY="149.0" prefHeight="659.0" prefWidth="1091.0" style="-fx-background-color: dde026;" visible="false">
+         <children>
+            <Label layoutX="34.0" layoutY="60.0" prefHeight="17.0" prefWidth="341.0" text="Introdueix la frequencia de llindar per les regles:">
+               <font>
+                  <Font name="Georgia" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="508.0" layoutY="27.0" prefHeight="15.0" prefWidth="511.0" text="Nota: Per calcular les regles d'associació primer has de discretitzar els atributs de la llista">
+               <font>
+                  <Font name="Georgia Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="211.0" prefHeight="17.0" prefWidth="159.0" text="Noves regles d'associació:" />
+            <Label layoutX="34.0" layoutY="22.0" prefHeight="25.0" prefWidth="258.0" text="Introdueix la llista per calcular les noves regles:" />
+            <ChoiceBox fx:id="llistaPerRegles" layoutX="327.0" layoutY="22.0" onMouseClicked="#selectList" prefWidth="150.0" />
+            <Button layoutX="958.0" layoutY="609.0" mnemonicParsing="false" onAction="#guardatCorrectamentRegles" prefHeight="36.0" prefWidth="76.0" text="Guardar" />
+            <TextField fx:id="Frequencia" layoutX="327.0" layoutY="56.0" onKeyReleased="#assignafreq" promptText="Frequencia" />
+            <Button layoutX="467.0" layoutY="195.0" mnemonicParsing="false" onAction="#calculnovesregles" text="Calcula noves regles" />
+            <TextField fx:id="confiansa" layoutX="327.0" layoutY="96.0" onKeyReleased="#assignaconfi" promptText="Confiança" />
+            <Label layoutX="34.0" layoutY="100.0" prefHeight="17.0" prefWidth="341.0" text="Introdueix la confiança per les regles:">
+               <font>
+                  <Font name="Georgia" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="150.0" prefHeight="17.0" prefWidth="341.0" text="Introdueix el % d'utilitat per calcular les regles:">
+               <font>
+                  <Font name="Georgia" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tantxcent" layoutX="327.0" layoutY="146.0" onKeyReleased="#assignapercentatge" promptText="\% d'utilitat" />
+            <Label layoutX="508.0" layoutY="151.0" prefHeight="15.0" prefWidth="511.0" text="Nota: Valors entre el 0 i 1.">
+               <font>
+                  <Font name="Georgia Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="508.0" layoutY="61.0" prefHeight="15.0" prefWidth="511.0" text="Nota:Valors entre 0 i 1">
+               <font>
+                  <Font name="Georgia Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="508.0" layoutY="101.0" prefHeight="15.0" prefWidth="511.0" text="Nota:Valors entre 0 i 1">
+               <font>
+                  <Font name="Georgia Italic" size="12.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableNovesRegles" layoutX="92.0" layoutY="232.0" prefHeight="368.0" prefWidth="894.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="FILES" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="EditarReglesPanel" layoutX="-7.0" layoutY="148.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
+         <children>
+            <Label layoutX="40.0" layoutY="63.0" text="Escull la operació que vols fer a la llista de regles d'associacions: ">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="398.0" layoutY="194.0" mnemonicParsing="false" onAction="#ButtonConsultaRegles" prefHeight="67.0" prefWidth="273.0" text="Consulta regles" />
+            <Button layoutX="398.0" layoutY="351.0" mnemonicParsing="false" onAction="#ButtonEliminaRegles" prefHeight="67.0" prefWidth="273.0" text="Elimina regles" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ConsultaReglesPanel" layoutX="-5.0" layoutY="148.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: dde026;" visible="false">
+         <children>
+            <ComboBox fx:id="llistaDeRegles" layoutX="513.0" layoutY="64.0" onMouseClicked="#selectList" prefHeight="25.0" prefWidth="141.0" promptText="Selecciona llista" />
+            <Label layoutX="92.0" layoutY="68.0" />
+            <Label layoutX="50.0" layoutY="68.0" prefHeight="17.0" prefWidth="475.0" text="Selecciona la llista a la que vols consultar les seves regles d'associacions:">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="101.0" prefHeight="26.0" prefWidth="183.0" text="Regles d'associacions de la llista:" />
+            <Button layoutX="932.0" layoutY="608.0" mnemonicParsing="false" onAction="#goHome" prefHeight="35.0" prefWidth="159.0" text="Torna al Menu Principal" />
+            <Button layoutX="48.0" layoutY="142.0" mnemonicParsing="false" onAction="#mostraRegles" text="Mostra regles" />
+            <TableView fx:id="TableConsultes" layoutX="60.0" layoutY="181.0" prefHeight="423.0" prefWidth="927.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="FILES" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="EliminarReglesPanel" layoutX="-1.0" layoutY="143.0" prefHeight="652.0" prefWidth="1091.0" style="-fx-background-color: #dde026;" visible="false">
+         <children>
+            <Label layoutX="66.0" layoutY="68.0" prefHeight="26.0" prefWidth="289.0" text="Selecciona la llista on vols eliminar regles: ">
+               <font>
+                  <Font name="Georgia" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="66.0" layoutY="132.0" prefHeight="26.0" prefWidth="183.0" text="Selecciona les regles a eliminar:">
+               <font>
+                  <Font name="Georgia" size="12.0" />
+               </font>
+            </Label>
+            <Button layoutX="931.0" layoutY="597.0" mnemonicParsing="false" onAction="#eliminaResultatsDesat" text="Elimina" />
+            <TableView fx:id="TableEliminats" layoutX="66.0" layoutY="172.0" prefHeight="410.0" prefWidth="927.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="FILES" />
+               </columns>
+            </TableView>
+            <Button layoutX="342.0" layoutY="133.0" mnemonicParsing="false" onAction="#mostraRegles" text="Mostra regles" />
+            <ChoiceBox fx:id="llistaDelete" layoutX="342.0" layoutY="69.0" onMouseClicked="#selectList" prefHeight="25.0" prefWidth="124.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ResultatsWindow" layoutX="-6.0" layoutY="147.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
+         <children>
+            <Button layoutX="521.0" layoutY="40.0" mnemonicParsing="false" onAction="#mostraResultats" text="Mostra resultats" />
+            <Label layoutX="45.0" layoutY="43.0" text="RESULTATS OBTINGUTS:">
+               <font>
+                  <Font name="Georgia" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="ComboBoxList2" layoutX="320.0" layoutY="40.0" prefWidth="150.0" promptText="Selecciona resultats" />
+            <Button layoutX="924.0" layoutY="603.0" mnemonicParsing="false" onAction="#goHome" text="Torna al menu principal" />
+            <TableView fx:id="TableResultats" layoutX="77.0" layoutY="99.0" prefHeight="499.0" prefWidth="963.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="FILES" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
