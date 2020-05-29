@@ -124,7 +124,7 @@ public class Controller implements Initializable {
     @FXML
     private TextArea llistaDiscretitzada;
     @FXML
-    private TextField AtrDiscret;
+    private ComboBox<String> AtrDiscret;
 
 
 
@@ -459,6 +459,14 @@ public class Controller implements Initializable {
         } else {
             LlistaWindow.setVisible(false);
             DiscretitzaPanel.setVisible(true);
+
+            String atr = atributDiscretitzar.getValue();
+            ArrayList<String> consulta = ctrlDom.mostraUnAtributDiscret(atr);
+            String ss = "";
+            for (int i = 0; i < consulta.size(); i++) {
+                ss += consulta.get(i) + "\n";
+            }
+            llistaDiscretitzada.setText(ss);
         }
     }
 
@@ -472,31 +480,73 @@ public class Controller implements Initializable {
             alerta.showAndWait();
         }
         else {
-            atributDiscretitzar.setItems(FXCollections.observableArrayList("hola"));
+            atributDiscretitzar.setItems(FXCollections.observableArrayList(ctrlDom.getAtribsDiscrets()));
             //atributDiscretitzar.setItems(FXCollections.observableArrayList(ctrlDom.);
         }
     }
 
-    public void mostraAtribsDiscrets () {
+    public void mostraAtribsDiscrets () throws IOException {
+        String s = ComboBoxList.getValue();
+        if (s == null) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Error");
+            alerta.setContentText("Ei! Selecciona la llista a consultar");
+            alerta.showAndWait();
+        } else {
+            llistaConsultora.setText(s);
+            ctrlDom.carregaLlista(s);
+            ArrayList<String> consulta = ctrlDom.mostraLlistaDiscret();
+            String ss = "";
+            for (int i = 0; i < consulta.size(); i++) {
+                ss += consulta.get(i) + "\n";
+            }
+            llistaConsultora.setText(ss);
+        }
 
     }
 
     public void assignaType() {
-        assignaTipus.setText("LO QUE ME DE LA GANA");
+        assignaTipus.setText(ctrlDom.obteTipus(atributDiscretitzar.getValue()));
     }
 
     public void rangperdefecte() {
-        if (rangdefault.isPressed()) {
-
-
+        String nomAtr = atributDiscretitzar.getValue();
+        if (!rangdefault.isSelected()) {
+            ctrlDom.setShowDefaultAtrib(nomAtr,true);
         }
+        else  ctrlDom.setShowDefaultAtrib(nomAtr,false);
+        ArrayList<String> consulta = ctrlDom.mostraUnAtributDiscret(nomAtr);
+        String ss = "";
+        for (int i = 0; i < consulta.size(); i++) {
+            ss += consulta.get(i) + "\n";
+        }
+        llistaDiscretitzada.setText(ss);
     }
 
+
+
+
     public void Discretitza() {
-        if (nomatribut&& range1 && range2) {
-            //ctrl_dom.atributsDiscretitzats;
-            llistaDiscretitzada.setText("MENJEUME ELS COLLONS");
-            AtrDiscret.setText("ATRIBUT QUE SIGUI");
+        String atr = atributDiscretitzar.getValue();
+        if (nomatribut && range1 && range2) {
+            String nomR= nomAtr.getText();
+            String r1 = Rang1.getText();
+            String r2 = Rang2.getText();
+
+
+            ctrlDom.afegeixRang(atr,nomR,r1,r2);
+
+            ArrayList<String> consulta = ctrlDom.mostraUnAtributDiscret(atr);
+
+            String ss = "";
+            for (int i = 0; i < consulta.size(); i++) {
+                ss += consulta.get(i) + "\n";
+            }
+            System.out.print("SE VIENE");
+            System.out.print(ss);
+            llistaDiscretitzada.setText(ss);
+
+            //AtrDiscret.setItems(FXCollections.observableArrayList(ctrlDom.));
             nomAtr.clear();
             Rang1.clear();
             Rang2.clear();
@@ -517,12 +567,15 @@ public class Controller implements Initializable {
     }
 
     public void assignanomatr() {
+        //String s = nomAtr.getValue();
         nomatribut = true;
     }
     public void assignarang1() {
+        //String s = Rang1.getValue();
         range1 = true;
     }
     public void assignarang2(){
+        //String s = Rang2.getValue();
         range2 = true;
     }
 
@@ -567,13 +620,15 @@ public class Controller implements Initializable {
         }
 
         if (a == 0) {
-            llistaConsultora = new TextArea();
-            System.out.print("hey");
+            //llistaConsultora = new TextArea();
             ArrayList<String> consulta = ctrlDom.mostraLlistaAtribs();
-            System.out.print("he fet algo");
+            String ss = "";
             for (int i = 0; i < consulta.size(); i++) {
-                llistaConsultora.setText(consulta.get(i));
+                    ss += consulta.get(i) + "\n";
             }
+            llistaConsultora.setText(ss);
+
+
         }
         if (a == 1) {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -631,8 +686,19 @@ public class Controller implements Initializable {
 
         //si no hem seleccionat el textField i frequencia (else) {
         if (llistaSelect && freq && confi && percentatge) {
+
             //crear text i set;
-            reglesArea.setText("Em menjeu el nabo?");
+            String s = llistaPerRegles.getValue();
+            Double f = Double.valueOf(Frequencia.getText());
+            Double c = Double.valueOf(confiansa.getText());
+            Double p = Double.valueOf(tantxcent.getText());
+            p /=100;
+
+           int a = ctrlDom.creaRegles_i_Resultats(s,s,p,f,c);
+           if (a == 0) {
+
+               //reglesArea.setText();
+           }
 
 
             Frequencia.clear();

@@ -97,7 +97,7 @@
             </Label>
             <Button fx:id="Save1" layoutX="1036.0" layoutY="578.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="52.0" text="Guardar" visible="false" />
             <TextArea fx:id="llistaDiscretitzada" layoutX="17.0" layoutY="122.0" prefHeight="384.0" prefWidth="963.0" />
-            <Label fx:id="assignaTipus" layoutX="97.0" layoutY="62.0" onMouseClicked="#assignaType" prefHeight="17.0" prefWidth="68.0" />
+            <Label fx:id="assignaTipus" layoutX="97.0" layoutY="62.0" onMouseClicked="#assignaType" prefHeight="17.0" prefWidth="68.0" text="CLICA AQUI!" />
             <TextField fx:id="nomAtr" layoutX="118.0" layoutY="89.0" onKeyReleased="#assignanomatr" promptText="Selecciona nom Atribut" />
             <TextField fx:id="Rang1" layoutX="377.0" layoutY="89.0" onKeyReleased="#assignarang1" promptText="Selecciona Rang1" />
             <TextField fx:id="Rang2" layoutX="629.0" layoutY="89.0" onKeyReleased="#assignarang2" promptText="Selecciona Rang2" />
@@ -106,11 +106,11 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <RadioButton fx:id="rangdefault" layoutX="840.0" layoutY="41.0" mnemonicParsing="false" onAction="#rangperdefecte" text="Rang per defecte" />
+            <RadioButton fx:id="rangdefault" layoutX="840.0" layoutY="41.0" mnemonicParsing="false" onAction="#rangperdefecte" text="Amaga rang per defecte" />
             <Button layoutX="844.0" layoutY="89.0" mnemonicParsing="false" onAction="#Discretitza" text="DISCRETITZA" />
             <Button layoutX="918.0" layoutY="531.0" mnemonicParsing="false" onAction="#EliminaDiscret" text="Elimina" />
-            <TextField fx:id="AtrDiscret" layoutX="754.0" layoutY="531.0" onAction="#Discretitza" prefHeight="25.0" prefWidth="150.0" promptText="Atribut Discret" />
             <Button layoutX="930.0" layoutY="602.0" mnemonicParsing="false" onAction="#ButtonLlistes" text="Torna al menu llistes" />
+            <ComboBox fx:id="AtrDiscret" layoutX="755.0" layoutY="531.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ReglesWindow" layoutY="149.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
@@ -124,7 +124,7 @@
             <Button layoutX="412.0" layoutY="52.0" mnemonicParsing="false" onAction="#ButtonEditarRegles" text="Editar o visualitzar regles d'associacions" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="CrearReglesPanel" layoutX="-2.0" layoutY="149.0" prefHeight="659.0" prefWidth="1091.0" style="-fx-background-color: dde026;" visible="false">
+      <AnchorPane fx:id="CrearReglesPanel" layoutX="-2.0" layoutY="149.0" prefHeight="659.0" prefWidth="1091.0" style="-fx-background-color: dde026;">
          <children>
             <Label layoutX="34.0" layoutY="60.0" prefHeight="17.0" prefWidth="341.0" text="Introdueix la frequencia de llindar per les regles:">
                <font>
@@ -154,7 +154,7 @@
                </font>
             </Label>
             <TextField fx:id="tantxcent" layoutX="327.0" layoutY="146.0" onKeyReleased="#assignapercentatge" promptText="\% d'utilitat" />
-            <Label layoutX="508.0" layoutY="151.0" prefHeight="15.0" prefWidth="511.0" text="Nota: Valors entre el 0 i 1.">
+            <Label layoutX="508.0" layoutY="151.0" prefHeight="15.0" prefWidth="511.0" text="Nota: Valors entre el 0 i 100.">
                <font>
                   <Font name="Georgia Italic" size="12.0" />
                </font>
@@ -215,7 +215,7 @@
             <ChoiceBox fx:id="llistaDelete" layoutX="342.0" layoutY="69.0" onMouseClicked="#selectList" prefHeight="25.0" prefWidth="124.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ResultatsWindow" layoutX="-6.0" layoutY="147.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;">
+      <AnchorPane fx:id="ResultatsWindow" layoutX="-6.0" layoutY="147.0" prefHeight="652.0" prefWidth="1098.0" style="-fx-background-color: #dde026;" visible="false">
          <children>
             <Button layoutX="521.0" layoutY="40.0" mnemonicParsing="false" onAction="#mostraResultats" text="Mostra resultats" />
             <Label layoutX="45.0" layoutY="43.0" text="RESULTATS OBTINGUTS:">
